@@ -1,0 +1,33 @@
+https://www.youtube.com/watch?v=AUqynhtB3fI - vb.net connect to database and check if record already exist.
+
+https://stackoverflow.com/questions/20649548/adding-records-in-vb-net-and-checking-if-records-exist-using-elseif
+
+https://www.daniweb.com/programming/software-development/threads/478759/check-if-record-exist-in-sql-database
+
+http://www.mysqltutorial.org/mysql-count/
+
+http://vbcity.com/forums/t/165602.aspx
+
+Cust can edit appt
+Manager can edit staff role
+Manager and staff can edit cust
+Manager and staff can edit appt
+Manager and staff can take appt
+Staff cannot edit staff
+Staff cannot delete any transaction
+Staff cannot change role
+Manager and staff can view report depending on level of report
+Staff can adjust payment, but it is recorded for tracking
+Active
+Consistency in both interfaces
+Reports
+
+Cannot add same customer except for different email.
+Cannot book before past time  - done
+Customer can change name or lastname - done
+
+If TimeSlotComboBox.SelectedIndex < DateTime.Now - done
+
+cannot use same password  - done
+Reactivate account -
+Deactivate account - done

@@ -1,0 +1,199 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+{\*\generator Riched20 10.0.15063}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22\lang9 -- MySQL Workbench Forward Engineering\par
+\par
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;\par
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;\par
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';\par
+\par
+-- -----------------------------------------------------\par
+-- Schema mydb\par
+-- -----------------------------------------------------\par
+-- -----------------------------------------------------\par
+-- Schema bis698fc1g5\par
+-- -----------------------------------------------------\par
+DROP SCHEMA IF EXISTS `bis698fc1g5` ;\par
+\par
+-- -----------------------------------------------------\par
+-- Schema bis698fc1g5\par
+-- -----------------------------------------------------\par
+CREATE SCHEMA IF NOT EXISTS `bis698fc1g5` DEFAULT CHARACTER SET utf8 ;\par
+USE `bis698fc1g5` ;\par
+\par
+-- -----------------------------------------------------\par
+-- Table `bis698fc1g5`.`customer`\par
+-- -----------------------------------------------------\par
+DROP TABLE IF EXISTS `bis698fc1g5`.`customer` ;\par
+\par
+CREATE TABLE IF NOT EXISTS `bis698fc1g5`.`customer` (\par
+  `ID` INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,\par
+  `FirstName` VARCHAR(30) NOT NULL,\par
+  `LastName` VARCHAR(30) NOT NULL,\par
+  `Address1` VARCHAR(30) NOT NULL,\par
+  `Address2` VARCHAR(30) NULL DEFAULT NULL,\par
+  `City` VARCHAR(30) NOT NULL,\par
+  `State` VARCHAR(2) NOT NULL,\par
+  `ZipCode` INT(5) NOT NULL,\par
+  `HomePhone` VARCHAR(10) NULL DEFAULT NULL,\par
+  `MobilePhone` VARCHAR(10) NOT NULL,\par
+  `Email` VARCHAR(45) NULL DEFAULT NULL,\par
+  `Active` TINYINT(1) NOT NULL DEFAULT '1',\par
+  `Username` VARCHAR(30) NOT NULL,\par
+  `Password` VARCHAR(30) NULL DEFAULT NULL,\par
+  `CreateDate` DATE NOT NULL DEFAULT '1000-01-01',\par
+  `LastUpdate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\par
+  PRIMARY KEY (`ID`),\par
+  UNIQUE INDEX `CustomerID_UNIQUE` (`ID` ASC))\par
+ENGINE = InnoDB\par
+AUTO_INCREMENT = 59\par
+DEFAULT CHARACTER SET = utf8;\par
+\par
+\par
+-- -----------------------------------------------------\par
+-- Table `bis698fc1g5`.`staff`\par
+-- -----------------------------------------------------\par
+DROP TABLE IF EXISTS `bis698fc1g5`.`staff` ;\par
+\par
+CREATE TABLE IF NOT EXISTS `bis698fc1g5`.`staff` (\par
+  `ID` SMALLINT(3) UNSIGNED NOT NULL AUTO_INCREMENT,\par
+  `FirstName` VARCHAR(30) NOT NULL,\par
+  `LastName` VARCHAR(30) NOT NULL,\par
+  `Address1` VARCHAR(30) NOT NULL,\par
+  `Address2` VARCHAR(30) NULL DEFAULT NULL,\par
+  `City` VARCHAR(30) NOT NULL,\par
+  `State` VARCHAR(2) NOT NULL,\par
+  `ZipCode` INT(5) NOT NULL,\par
+  `HomePhone` VARCHAR(10) NULL DEFAULT NULL,\par
+  `MobilePhone` VARCHAR(10) NOT NULL,\par
+  `Email` VARCHAR(45) NULL DEFAULT NULL,\par
+  `Active` TINYINT(1) NOT NULL DEFAULT '1',\par
+  `Username` VARCHAR(30) NOT NULL,\par
+  `Password` VARCHAR(30) NULL DEFAULT NULL,\par
+  `Role` VARCHAR(20) NOT NULL,\par
+  `CreateDate` DATE NULL DEFAULT NULL,\par
+  `LastUpdate` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\par
+  PRIMARY KEY (`ID`),\par
+  UNIQUE INDEX `StaffID_UNIQUE` (`ID` ASC))\par
+ENGINE = InnoDB\par
+AUTO_INCREMENT = 30\par
+DEFAULT CHARACTER SET = utf8;\par
+\par
+\par
+-- -----------------------------------------------------\par
+-- Table `bis698fc1g5`.`appointment`\par
+-- -----------------------------------------------------\par
+DROP TABLE IF EXISTS `bis698fc1g5`.`appointment` ;\par
+\par
+CREATE TABLE IF NOT EXISTS `bis698fc1g5`.`appointment` (\par
+  `ID` INT(8) UNSIGNED NOT NULL AUTO_INCREMENT,\par
+  `AppointmentTime` TIME NOT NULL,\par
+  `AppointmentDate` DATE NOT NULL,\par
+  `Status` VARCHAR(10) NULL DEFAULT 'open',\par
+  `CreateDate` DATE NOT NULL,\par
+  `LastUpdate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\par
+  `staff_ID` SMALLINT(3) UNSIGNED NULL DEFAULT NULL,\par
+  `customer_ID` INT(8) UNSIGNED NOT NULL,\par
+  PRIMARY KEY (`ID`),\par
+  UNIQUE INDEX `AppointmentID_UNIQUE` (`ID` ASC),\par
+  INDEX `fk_appointment_staff1_idx` (`staff_ID` ASC),\par
+  INDEX `fk_appointment_customer1_idx` (`customer_ID` ASC),\par
+  CONSTRAINT `fk_appointment_customer1`\par
+    FOREIGN KEY (`customer_ID`)\par
+    REFERENCES `bis698fc1g5`.`customer` (`ID`)\par
+    ON DELETE NO ACTION\par
+    ON UPDATE NO ACTION,\par
+  CONSTRAINT `fk_appointment_staff1`\par
+    FOREIGN KEY (`staff_ID`)\par
+    REFERENCES `bis698fc1g5`.`staff` (`ID`)\par
+    ON DELETE NO ACTION\par
+    ON UPDATE NO ACTION)\par
+ENGINE = InnoDB\par
+AUTO_INCREMENT = 261\par
+DEFAULT CHARACTER SET = utf8;\par
+\par
+\par
+-- -----------------------------------------------------\par
+-- Table `bis698fc1g5`.`service`\par
+-- -----------------------------------------------------\par
+DROP TABLE IF EXISTS `bis698fc1g5`.`service` ;\par
+\par
+CREATE TABLE IF NOT EXISTS `bis698fc1g5`.`service` (\par
+  `ID` SMALLINT(5) UNSIGNED NOT NULL AUTO_INCREMENT,\par
+  `Cost` DECIMAL(5,2) NOT NULL,\par
+  `Hairstyle` VARCHAR(30) NOT NULL,\par
+  `CreateDate` DATE NOT NULL DEFAULT '1000-01-01',\par
+  `LastUpdate` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,\par
+  `Active` SMALLINT(2) NOT NULL,\par
+  PRIMARY KEY (`ID`),\par
+  UNIQUE INDEX `ServiceID_UNIQUE` (`ID` ASC))\par
+ENGINE = InnoDB\par
+AUTO_INCREMENT = 48\par
+DEFAULT CHARACTER SET = utf8;\par
+\par
+\par
+-- -----------------------------------------------------\par
+-- Table `bis698fc1g5`.`appointmentservice`\par
+-- -----------------------------------------------------\par
+DROP TABLE IF EXISTS `bis698fc1g5`.`appointmentservice` ;\par
+\par
+CREATE TABLE IF NOT EXISTS `bis698fc1g5`.`appointmentservice` (\par
+  `appointment_ID` INT(8) UNSIGNED NOT NULL,\par
+  `service_ID` SMALLINT(5) UNSIGNED NOT NULL,\par
+  `Price` DECIMAL(5,2) NOT NULL,\par
+  `ServiceDate` DATE NULL DEFAULT NULL,\par
+  `ServiceTime` TIME NULL DEFAULT NULL,\par
+  PRIMARY KEY (`appointment_ID`, `service_ID`),\par
+  INDEX `fk_appointment_has_service_service1_idx` (`service_ID` ASC),\par
+  INDEX `fk_appointment_has_service_appointment1_idx` (`appointment_ID` ASC),\par
+  CONSTRAINT `fk_appointment_has_service_appointment1`\par
+    FOREIGN KEY (`appointment_ID`)\par
+    REFERENCES `bis698fc1g5`.`appointment` (`ID`)\par
+    ON DELETE NO ACTION\par
+    ON UPDATE NO ACTION,\par
+  CONSTRAINT `fk_appointment_has_service_service1`\par
+    FOREIGN KEY (`service_ID`)\par
+    REFERENCES `bis698fc1g5`.`service` (`ID`)\par
+    ON DELETE NO ACTION\par
+    ON UPDATE NO ACTION)\par
+ENGINE = InnoDB\par
+DEFAULT CHARACTER SET = utf8;\par
+\par
+\par
+-- -----------------------------------------------------\par
+-- Table `bis698fc1g5`.`payment`\par
+-- -----------------------------------------------------\par
+DROP TABLE IF EXISTS `bis698fc1g5`.`payment` ;\par
+\par
+CREATE TABLE IF NOT EXISTS `bis698fc1g5`.`payment` (\par
+  `ID` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,\par
+  `Status` VARCHAR(10) NOT NULL,\par
+  `Tax` DECIMAL(5,2) NULL DEFAULT NULL,\par
+  `Amount` DECIMAL(5,2) NOT NULL,\par
+  `CreateDate` DATE NOT NULL DEFAULT '1000-01-01',\par
+  `LastUpdate` DATE NOT NULL,\par
+  `staff_ID` SMALLINT(3) UNSIGNED NOT NULL,\par
+  `appointment_ID` INT(8) UNSIGNED NOT NULL,\par
+  PRIMARY KEY (`ID`),\par
+  UNIQUE INDEX `PaymentID_UNIQUE` (`ID` ASC),\par
+  INDEX `fk_payment_staff_idx` (`staff_ID` ASC),\par
+  INDEX `fk_payment_appointment1_idx` (`appointment_ID` ASC),\par
+  CONSTRAINT `fk_payment_appointment1`\par
+    FOREIGN KEY (`appointment_ID`)\par
+    REFERENCES `bis698fc1g5`.`appointment` (`ID`)\par
+    ON DELETE NO ACTION\par
+    ON UPDATE NO ACTION,\par
+  CONSTRAINT `fk_payment_staff`\par
+    FOREIGN KEY (`staff_ID`)\par
+    REFERENCES `bis698fc1g5`.`staff` (`ID`)\par
+    ON DELETE NO ACTION\par
+    ON UPDATE NO ACTION)\par
+ENGINE = InnoDB\par
+AUTO_INCREMENT = 56\par
+DEFAULT CHARACTER SET = utf8;\par
+\par
+\par
+SET SQL_MODE=@OLD_SQL_MODE;\par
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;\par
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;\par
+}
+ 
